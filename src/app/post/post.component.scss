@@ -1,0 +1,23 @@
+.posts {
+  text-align: left;
+  margin: 30px;
+
+  h1 {
+    margin: 0 0 10px 0;
+  }
+
+  .button-get-posts {
+    display: block;
+    height: 50px;
+    width: 120px;
+  }
+
+  .spinner {
+    margin: 0 auto;
+  }
+
+  .mat-divider {
+    margin: 0 0 15px 0;
+    border-width: 2px;
+  }
+}
