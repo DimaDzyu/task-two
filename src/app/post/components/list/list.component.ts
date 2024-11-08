@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
 import {
@@ -17,7 +17,10 @@ import {
 } from "@angular/material/table";
 import { MatSort, MatSortHeader } from "@angular/material/sort";
 import { Post } from "../../post.interface";
-import { FilterService } from "../filter/filter.service";
+import { FilterService } from "../../../services/filter.service";
+import { JsonplaceholderService } from "../../../services/jsonplaceholder.service";
+import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { NgIf } from "@angular/common";
 
 @Component({
   selector: 'app-list',
@@ -38,7 +41,9 @@ import { FilterService } from "../filter/filter.service";
     MatNoDataRow,
     MatHeaderCellDef,
     MatCellDef,
-    MatSortHeader
+    MatSortHeader,
+    MatProgressSpinner,
+    NgIf
   ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
@@ -47,11 +52,9 @@ export class ListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['userId', 'id', 'title', 'body'];
   dataSource: MatTableDataSource<Post>;
 
-  @Input() posts: Post[];
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private filterService: FilterService) {
-
+  constructor(private filterService: FilterService, private jsonplaceholderService: JsonplaceholderService) {
   }
 
   ngAfterViewInit(): void {
@@ -59,24 +62,16 @@ export class ListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.posts);
+    this.jsonplaceholderService.posts$.subscribe((posts: Post[]): void => {
+      this.dataSource = new MatTableDataSource(posts);
+    });
+
+    this.filterService.filter$.subscribe((filter: string): void => {
+      this.dataSource.filter = filter;
+    });
+
     this.dataSource.filterPredicate = function (data: Post, filter: string): boolean {
       return data.userId.toString() === filter;
     };
-    this.filterService.filter$.subscribe((filter) => {
-      console.log(filter);
-      this.dataSource.filter = filter;
-    });
-  }
-
-  applyFilter(event: Event): void {
-    const filterValue: string = (event.target as HTMLInputElement).value;
-
-    if (filterValue.match(/[^0-9]/)) {
-      (event.target as HTMLInputElement).value = filterValue.replace(/\D/, '');
-      event.preventDefault();
-    }
-
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

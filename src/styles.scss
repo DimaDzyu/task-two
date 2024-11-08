@@ -25,3 +25,41 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+/**
+  Snackbar style
+*/
+.snackbar-error {
+  margin: 8px 15px 8px 15px !important;
+
+  & .mdc-snackbar__surface {
+    background-color: #ffdcda !important;
+  }
+
+  & .mdc-snackbar__label {
+    color: red !important;
+  }
+
+  & .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+    color: red !important;
+    --mat-text-button-state-layer-color: none !important;
+    --mat-text-button-ripple-color: none !important;
+  }
+
+  & .mat-mdc-snack-bar-action:hover {
+    opacity: 0.6;
+  }
+
+  & .mdc-button__label {
+    border-radius: 50%;
+    padding: 3px 6px;
+    border: 1px solid red;
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  & .mdc-button {
+    min-width: auto;
+    margin-right: 2px;
+  }
+}

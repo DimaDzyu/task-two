@@ -4,11 +4,10 @@ import { ListComponent } from "./components/list/list.component";
 import { JsonplaceholderService } from "../services/jsonplaceholder.service";
 import { MatButtonToggle } from "@angular/material/button-toggle";
 import { MatButton } from "@angular/material/button";
-import { finalize } from "rxjs";
 import { NgIf } from "@angular/common";
 import { MatProgressSpinner } from "@angular/material/progress-spinner";
 import { MatDivider } from "@angular/material/divider";
-import { Post } from "./post.interface";
+import { ButtonComponent } from "./components/button/button.component";
 
 @Component({
   selector: 'app-post',
@@ -20,30 +19,18 @@ import { Post } from "./post.interface";
     MatButton,
     NgIf,
     MatProgressSpinner,
-    MatDivider
+    MatDivider,
+    ButtonComponent
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
 export class PostComponent {
   loading: boolean = false;
-  posts: Post[];
 
   constructor(private jsonplaceholderService: JsonplaceholderService) {
-  }
-
-  getPosts(): void {
-    this.loading = true;
-    this.jsonplaceholderService.getPosts().pipe(
-      finalize((): void => {
-          setTimeout((): void => {
-            this.loading = false;
-          }, 500);
-        }
-      ))
-      .subscribe(
-        (res): void => {
-          this.posts = res;
-        });
+    this.jsonplaceholderService.loading$.subscribe((loading: boolean): void => {
+      this.loading = loading;
+    });
   }
 }
