@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ButtonComponent } from './button.component';
+import { PostComponent } from "../../post.component";
+import { HttpClientModule } from "@angular/common/http";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 describe('ButtonComponent', (): void => {
   let component: ButtonComponent;
@@ -7,7 +10,7 @@ describe('ButtonComponent', (): void => {
 
   beforeEach(async (): Promise<void> => {
     await TestBed.configureTestingModule({
-      imports: [ButtonComponent]
+      imports: [PostComponent, HttpClientModule, BrowserAnimationsModule]
     })
       .compileComponents();
 

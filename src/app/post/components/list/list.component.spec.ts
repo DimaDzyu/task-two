@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListComponent } from './list.component';
+import { PostComponent } from "../../post.component";
+import { HttpClientModule } from "@angular/common/http";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 describe('ListComponent', (): void => {
   let component: ListComponent;
@@ -7,7 +10,7 @@ describe('ListComponent', (): void => {
 
   beforeEach(async (): Promise<void> => {
     await TestBed.configureTestingModule({
-      imports: [ListComponent]
+      imports: [PostComponent, HttpClientModule, BrowserAnimationsModule]
     })
       .compileComponents();
 
