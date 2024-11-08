@@ -1,1 +1,38 @@
-<p>list works!</p>
+<!--<mat-form-field>-->
+<!--  <mat-label>User ID</mat-label>-->
+<!--  <input (input)="applyFilter($event)" matInput>-->
+<!--</mat-form-field>-->
+
+<div class="mat-elevation-z8">
+  <table [dataSource]="dataSource" mat-table matSort>
+
+    <ng-container matColumnDef="userId">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>User ID</th>
+      <td *matCellDef="let row" mat-cell> {{ row.userId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>ID</th>
+      <td *matCellDef="let row" mat-cell> {{ row.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Title</th>
+      <td *matCellDef="let row" mat-cell> {{ row.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="body">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Body</th>
+      <td *matCellDef="let row" mat-cell> {{ row.body }}</td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+    <tr *matNoDataRow class="mat-row">
+      <td class="mat-cell no-data" colspan="4">No data</td>
+    </tr>
+  </table>
+</div>
+
+

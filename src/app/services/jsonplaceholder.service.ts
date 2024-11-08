@@ -14,7 +14,7 @@ export class JsonplaceholderService {
 
   public getPosts(): Observable<any> {
     return this.http
-      .get(`${this.environment.jsonplaceholderUrl}/posts`)
+      .get(`${this.environment.jsonplaceholderUrl}posts`)
       .pipe(catchError(this.handleError<any>()));
   }
 

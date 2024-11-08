@@ -8,6 +8,7 @@ import { finalize } from "rxjs";
 import { NgIf } from "@angular/common";
 import { MatProgressSpinner } from "@angular/material/progress-spinner";
 import { MatDivider } from "@angular/material/divider";
+import { Post } from "./post.interface";
 
 @Component({
   selector: 'app-post',
@@ -26,6 +27,7 @@ import { MatDivider } from "@angular/material/divider";
 })
 export class PostComponent {
   loading: boolean = false;
+  posts: Post[];
 
   constructor(private jsonplaceholderService: JsonplaceholderService) {
   }
@@ -41,7 +43,7 @@ export class PostComponent {
       ))
       .subscribe(
         (res): void => {
-          console.log(res)
+          this.posts = res;
         });
   }
 }

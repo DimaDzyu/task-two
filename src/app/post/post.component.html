@@ -1,6 +1,6 @@
 <section class="posts">
   <h1>Posts</h1>
-  <mat-divider pad/>
+  <mat-divider/>
   <button
     (click)="getPosts()"
     [disabled]="loading"
@@ -11,6 +11,6 @@
     Get posts
   </button>
   <app-filter/>
-  <mat-spinner class="spinner" *ngIf="loading"/>
-  <app-list *ngIf="!loading"/>
+  <mat-spinner *ngIf="loading" class="spinner"/>
+  <app-list *ngIf="!loading" [posts]="posts"/>
 </section>
