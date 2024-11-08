@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { FilterService } from './filter.service';
 import { PostComponent } from "../post/post.component";
 import { HttpClientModule } from "@angular/common/http";
