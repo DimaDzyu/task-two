@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatButton } from "@angular/material/button";
 import { JsonplaceholderService } from "../../../services/jsonplaceholder.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-button',
@@ -11,8 +12,9 @@ import { JsonplaceholderService } from "../../../services/jsonplaceholder.servic
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss'
 })
-export class ButtonComponent {
+export class ButtonComponent implements OnDestroy {
   loading: boolean = false;
+  subscriptionJsonplaceholderService: Subscription;
 
   constructor(private jsonplaceholderService: JsonplaceholderService) {
     this.jsonplaceholderService.loading$.subscribe((loading: boolean): void => {
@@ -22,5 +24,9 @@ export class ButtonComponent {
 
   loadPosts(): void {
     this.jsonplaceholderService.loadPosts()
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionJsonplaceholderService.unsubscribe();
   }
 }
