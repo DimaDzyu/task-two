@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
 import {
@@ -21,6 +21,7 @@ import { FilterService } from "../../../services/filter.service";
 import { JsonplaceholderService } from "../../../services/jsonplaceholder.service";
 import { MatProgressSpinner } from "@angular/material/progress-spinner";
 import { NgIf } from "@angular/common";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-list',
@@ -48,9 +49,11 @@ import { NgIf } from "@angular/common";
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })
-export class ListComponent implements OnInit, AfterViewInit {
+export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = ['userId', 'id', 'title', 'body'];
   dataSource: MatTableDataSource<Post>;
+  subscriptionFilterService: Subscription;
+  subscriptionJsonplaceholderService: Subscription;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -62,16 +65,21 @@ export class ListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.jsonplaceholderService.posts$.subscribe((posts: Post[]): void => {
+    this.subscriptionJsonplaceholderService = this.jsonplaceholderService.posts$.subscribe((posts: Post[]): void => {
       this.dataSource = new MatTableDataSource(posts);
     });
 
-    this.filterService.filter$.subscribe((filter: string): void => {
+    this.subscriptionFilterService = this.filterService.filter$.subscribe((filter: string): void => {
       this.dataSource.filter = filter;
     });
 
     this.dataSource.filterPredicate = function (data: Post, filter: string): boolean {
       return data.userId.toString() === filter;
     };
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionJsonplaceholderService.unsubscribe();
+    this.subscriptionFilterService.unsubscribe();
   }
 }
